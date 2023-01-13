@@ -16,6 +16,7 @@ def genCrc(i):
     return crc
 
 def encryptCrc(crc_val):
+    crc_val = int.from_bytes(crc_val, byteorder='little')
     # Not my idea to call this an encryption, the manufacturer calls it an encryption in the original lib ;)
     xor_val = 0xedcab9de
     val=crc_val ^ xor_val

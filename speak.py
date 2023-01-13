@@ -12,6 +12,7 @@ hcmd.gaitType = GaitType.TROT
 hcmd.velocity = [0.04, 0.1]
 hcmd.yawSpeed = 2
 hcmd.footRaiseHeight = 0.1
+hcmd.encrypt = True
 cmd_bytes = hcmd.buildCmd(debug=True)
 conn.send(cmd_bytes)
 

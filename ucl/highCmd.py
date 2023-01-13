@@ -1,4 +1,3 @@
-import crcmod
 import struct
 import binascii
 from ucl.enums import Mode, GaitType, SpeedLevel
