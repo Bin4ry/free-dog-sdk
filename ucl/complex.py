@@ -20,7 +20,7 @@ class bmsCmd:
         self.reserve = reserve
 
     def getBytes(self):
-        return (self.off).to_bytes(1) + self.reserve[0].to_bytes(1) + self.reserve[1].to_bytes(1) + self.reserve[2].to_bytes(1)
+        return (self.off).to_bytes(1, byteorder='big') + self.reserve[0].to_bytes(1, byteorder='big') + self.reserve[1].to_bytes(1, byteorder='big') + self.reserve[2].to_bytes(1, byteorder='big')
 
 class led:                                  # foot led brightness: 0~255
     def __init__(self, r, g, b):
@@ -29,7 +29,7 @@ class led:                                  # foot led brightness: 0~255
         self.b = b
 
     def getBytes(self):
-        return (self.r).to_bytes(1) + (self.g).to_bytes(1) + (self.b).to_bytes(1) + bytes(1)
+        return (self.r).to_bytes(1, byteorder='big') + (self.g).to_bytes(1, byteorder='big') + (self.b).to_bytes(1, byteorder='big') + bytes(1)
 
 class motorState:                               # motor feedback
     def __init__(self, q, dq, ddq, tauEst, q_raw, dq_raw, ddq_raw, temperature, reserve):
@@ -66,7 +66,7 @@ class motorCmd:
         if isinstance(self.mode, Enum):
             self.mode = self.mode.value
 
-        return (self.mode).to_bytes(1) + float_to_hex(self.q) + float_to_hex(self.dq) + float_to_hex(self.tau) + float_to_hex(self.Kp) + float_to_hex(self.Kd) + self.reserve[0].to_bytes(2) + self.reserve[1].to_bytes(2) + self.reserve[2].to_bytes(2)
+        return (self.mode).to_bytes(1, byteorder='big') + float_to_hex(self.q) + float_to_hex(self.dq) + float_to_hex(self.tau) + float_to_hex(self.Kp) + float_to_hex(self.Kd) + self.reserve[0].to_bytes(2, byteorder='big') + self.reserve[1].to_bytes(2, byteorder='big') + self.reserve[2].to_bytes(2, byteorder='big')
 
 
 class motorCmdArray:
