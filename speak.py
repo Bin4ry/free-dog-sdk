@@ -41,12 +41,12 @@ for paket in data:
     print('+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=+=')
 
 # Example rotate 90° left
-# hcmd.mode = Mode.VEL_WALK
-# hcmd.gaitType = GaitType.TROT
-# hcmd.velocity = [0.04, 0.1]
-# hcmd.yawSpeed = 2
-# hcmd.footRaiseHeight = 0.1
-# hcmd.encrypt = False
-# cmd_bytes = hcmd.buildCmd(debug=True)
-# conn.send(cmd_bytes)
-# time.sleep(0.1)
+hcmd.mode = Mode.VEL_WALK
+hcmd.gaitType = GaitType.TROT
+hcmd.velocity = [0.04, 0.1]
+hcmd.yawSpeed = 2
+hcmd.footRaiseHeight = 0.1
+hcmd.encrypt = False
+cmd_bytes = hcmd.buildCmd(debug=True)
+conn.send(cmd_bytes)
+time.sleep(0.1)
