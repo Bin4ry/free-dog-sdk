@@ -1,5 +1,8 @@
 import socket
 from threading import Thread, Event
+from ucl.common import pretty_print_obj
+
+from ucl.highState import highState
 
 listenPort = 8090
 sendPort_low = 8007
@@ -25,6 +28,8 @@ class unitreeConnection:
         self.sock = self.connect()
         self.runRecv = Event()
         self.recvThreadID = None
+        self.data = []
+        self.highState = highState()
 
     def startRecv(self):
         self.recvThreadID = Thread(target=self.recvThread, args=(self.runRecv,))
@@ -50,12 +55,17 @@ class unitreeConnection:
         print(data)
 
     def recvThread(self, event):
-        print('[*] Start receive Thread ...')
+        print('[*] Start receive Thread ...\n')
         while not event.isSet():
             try:
-                data = self.sock.recv(2048).decode()
-                print('data!!!!!!')
-                print(data)
-            except:
+                self.data.append(self.sock.recv(2048))
+            except Exception as e:
+                # print(e)
                 pass
         print('[*] Exited receive Thread ...')
+
+    def getData(self):
+        ret = self.data.copy()
+        # Clear data buffer after handing it out
+        self.data.clear()
+        return ret

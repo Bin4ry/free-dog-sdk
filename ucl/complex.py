@@ -2,6 +2,12 @@ from enum import Enum
 from ucl.enums import Mode
 from ucl.common import float_to_hex
 
+class cartesian:
+    def __init__(self, x,y,z):
+        self.x = x
+        self.y = y
+        self.z = z
+
 class bmsState:
     def __init__(self, version_h, version_l, bms_status, SOC, current, cycle, BQ_NTC, MCU_NTC, cell_vol):
         self.version_h = version_h
@@ -13,14 +19,14 @@ class bmsState:
         self.BQ_NTC = BQ_NTC                # x1 degrees centigrade
         self.MCU_NTC = MCU_NTC              # x1 degrees centigrade
         self.cell_vol = cell_vol            # cell voltage mV
-
+    
 class bmsCmd:
     def __init__(self, off, reserve):
         self.off = off
         self.reserve = reserve
 
     def getBytes(self):
-        return (self.off).to_bytes(1, byteorder='big') + self.reserve[0].to_bytes(1, byteorder='big') + self.reserve[1].to_bytes(1, byteorder='big') + self.reserve[2].to_bytes(1, byteorder='big')
+        return (self.off).to_bytes(1, byteorder='little') + self.reserve[0].to_bytes(1, byteorder='little') + self.reserve[1].to_bytes(1, byteorder='little') + self.reserve[2].to_bytes(1, byteorder='little')
 
 class led:                                  # foot led brightness: 0~255
     def __init__(self, r, g, b):
@@ -29,10 +35,10 @@ class led:                                  # foot led brightness: 0~255
         self.b = b
 
     def getBytes(self):
-        return (self.r).to_bytes(1, byteorder='big') + (self.g).to_bytes(1, byteorder='big') + (self.b).to_bytes(1, byteorder='big') + bytes(1)
+        return (self.r).to_bytes(1, byteorder='little') + (self.g).to_bytes(1, byteorder='little') + (self.b).to_bytes(1, byteorder='little') + bytes(1)
 
 class motorState:                               # motor feedback
-    def __init__(self, q, dq, ddq, tauEst, q_raw, dq_raw, ddq_raw, temperature, reserve):
+    def __init__(self, mode, q, dq, ddq, tauEst, q_raw, dq_raw, ddq_raw, temperature, reserve):
         self.mode = mode                        # motor working mode
         self.q = q                              # current angle (unit: radian)
         self.dq = dq                            # current velocity (unit: radian/second)
@@ -45,7 +51,7 @@ class motorState:                               # motor feedback
         self.reserve = reserve
 
 class imu:                                      # when under accelerated motion, the attitude of the robot calculated by IMU will drift.
-    def __init__(self, quaternion, gyroscope, rpy, temperature):
+    def __init__(self, quaternion, gyroscope, accelerometer, rpy, temperature):
         self.quaternion = quaternion            # quaternion, normalized, (w,x,y,z)
         self.gyroscope = gyroscope              # angular velocity （unit: rad/s)    (raw data)
         self.accelerometer = accelerometer      # m/(s2)                             (raw data)
@@ -66,7 +72,7 @@ class motorCmd:
         if isinstance(self.mode, Enum):
             self.mode = self.mode.value
 
-        return (self.mode).to_bytes(1, byteorder='big') + float_to_hex(self.q) + float_to_hex(self.dq) + float_to_hex(self.tau) + float_to_hex(self.Kp) + float_to_hex(self.Kd) + self.reserve[0].to_bytes(2, byteorder='big') + self.reserve[1].to_bytes(2, byteorder='big') + self.reserve[2].to_bytes(2, byteorder='big')
+        return (self.mode).to_bytes(1, byteorder='little') + float_to_hex(self.q) + float_to_hex(self.dq) + float_to_hex(self.tau) + float_to_hex(self.Kp) + float_to_hex(self.Kd) + self.reserve[0].to_bytes(2, byteorder='little') + self.reserve[1].to_bytes(2, byteorder='little') + self.reserve[2].to_bytes(2, byteorder='little')
 
 
 class motorCmdArray:

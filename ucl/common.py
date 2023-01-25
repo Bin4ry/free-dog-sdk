@@ -1,7 +1,49 @@
+from enum import Enum
 import struct
-import crcmod
+
+def decode_sn(data):
+    type = data[0]
+    type_name = 'UNKNOWN'
+    if type == 1:
+        type_name = 'Laikago'
+    elif type == 2:
+        type_name = 'Aliengo'
+    elif type == 3:
+        type_name = 'A1'
+    elif type == 4:
+        type_name = 'Go1'
+    elif type == 4:
+        type_name = 'B1'
+    model = data[1]
+    model_name = 'UNKNOWN'
+    if model == 1:
+        model_name = 'AIR'
+    elif model == 2:
+        model_name = 'PRO'
+    elif model == 3:
+        model_name = 'EDU'
+    elif model == 4:
+        model_name = 'PC'
+    elif model == 4:
+        model_name = 'XX'
+    product_name = f'{type_name}_{model_name}'
+    id = f'{data[2]}-{data[3]}-{data[4]}[{data[5]}]'
+    return product_name, id
+
+def decode_version(data):
+    hardware_version = f'{data[0]}.{data[1]}.{data[2]}'
+    software_version = f'{data[3]}.{data[4]}.{data[5]}'
+    return hardware_version, software_version
+
+def getVoltage(cellVoltages):
+    return sum(cellVoltages)
+
+
 def float_to_hex(f):
     return (struct.unpack('<I', struct.pack('<f', f))[0]).to_bytes(4, 'little')
+
+def hex_to_float(h):
+    return struct.unpack('<f', h)[0]
 
 def genCrc(i):
     crc = 0xFFFFFFFF
@@ -28,3 +70,26 @@ def encryptCrc(crc_val):
     temp[2] = data[3]
     temp[3] = data[0]
     return temp
+
+def byte_print(bytes):
+    a = ''.join('{:02x}'.format(x) for x in bytes)
+    return a
+
+def dump_obj(obj):
+  for attr in dir(obj):
+    print("obj.%s = %r" % (attr, getattr(obj, attr)))
+
+def pretty_print_obj(clas, indent=0, border=True):
+    if border:
+        print('===============================================================================================')
+    print(' ' * indent + type(clas).__name__ + ':')
+    indent += 4
+    for k, v in clas.__dict__.items():
+        if '__dict__' in dir(v):
+            pretty_print_obj(v, indent, False)
+        elif isinstance(v, Enum):
+            print(' ' * indent + k + ': ' + str(v.value))
+        else:
+            print(' ' * indent + k + ': ' + str(v))
+    if border:
+        print('===============================================================================================')

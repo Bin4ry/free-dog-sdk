@@ -1,14 +1,12 @@
-import struct
-import binascii
 from ucl.enums import Mode, GaitType, SpeedLevel
 from enum import Enum
-from ucl.common import float_to_hex, encryptCrc, genCrc
+from ucl.common import float_to_hex, encryptCrc, genCrc, byte_print
 from ucl.complex import led, bmsCmd
 
 class highCmd:
     def __init__(self):
         self.head = bytes.fromhex('FEEF')
-        self.levelFlag = 0
+        self.levelFlag = 0x00
         self.frameReserve = 0
         self.SN = bytearray(8)
         self.version = bytearray(8)
@@ -73,6 +71,5 @@ class highCmd:
         else:
             cmd[-4:] = genCrc(cmd[:-5])
         if debug:
-            print(f'Length: {len(cmd)}')
-            print('Data: '+''.join('{:02x}'.format(x) for x in cmd))
+            print(f'Send Data ({len(cmd)}): {byte_print(cmd)}')
         return cmd
