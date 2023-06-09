@@ -1,10 +1,11 @@
-from ucl.enums import MotorModeHigh, GaitType, SpeedLevel
+from ucl.enums import MotorModeLow, GaitType, SpeedLevel
 from enum import Enum
-from ucl.common import float_to_hex, hex_to_float, encryptCrc, genCrc, byte_print
+from ucl.common import float_to_hex, hex_to_float, tau_to_hex, hex_to_tau, encryptCrc, genCrc, byte_print
 from ucl.complex import cartesian, led, bmsState, imu, motorState
 import struct
 
-class highState:
+
+class lowState:
     def __init__(self): #highState len == 1087 / lowState len == 807
         self.head = bytearray(2)
         self.levelFlag = 0
@@ -13,22 +14,11 @@ class highState:
         self.version = bytearray(8)
         self.bandWidth = bytearray(4)
         self.imu = imu([0.0,0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0],[0.0,0.0,0.0],0)
-        self.motorstate = [motorState(0,0,0,0,0,0,0,0,0,0)]*20
+        self.motorState = [motorState(0,0,0,0,0,0,0,0,0,0)]*20
         self.bms = bmsState(0,0,0,0,0,0,0,0,0)
         self.footForce = [bytes.fromhex('0000')]*4
         self.footForceEst = [bytes.fromhex('0000')]*4
-        self.mode = MotorModeHigh.IDLE
-        self.progress = 0.0
-        self.gaitType = GaitType.IDLE
-        self.footRaiseHeight = 0.0
-        self.position = [0.0, 0.0]
-        self.bodyHeight = 0.0
-        self.velocity = [0.0, 0.0]
-        self.yawSpeed = 0.0
-        self.rangeObstacle = bytearray(16)
-        self.footPosition2Body = bytearray(48)
-        self.footSpeed2Body = bytearray(48)
-        self.speedLevel = SpeedLevel.LOW_SPEED
+        self.tick = bytearray(4)
         self.wirelessRemote = bytearray(40)
         self.reserve = bytearray(4)
 
@@ -59,7 +49,7 @@ class highState:
         q = hex_to_float(data[1:5])
         dq = hex_to_float(data[5:9])
         ddq = hex_to_float(data[9:13])
-        tauEst = hex_to_float(data[13:17])
+        tauEst = hex_to_tau(data[13:17])
         q_raw = hex_to_float(data[17:21])
         dq_raw = hex_to_float(data[21:25])
         ddq_raw = hex_to_float(data[25:29])
@@ -78,25 +68,11 @@ class highState:
         self.motorstate=[]
         for i in range(20):
             self.motorstate.append(self.dataToMotorState(data[(i*32)+75:(i*32)+32+75]))
-        # FIX FROM HERE!!!
-        self.bms=self.dataToBmsState(data[835:869])
-        self.footForce = [int.from_bytes(data[869:871], byteorder='little'), int.from_bytes(data[871:873], byteorder='little'), int.from_bytes(data[873:875], byteorder='little'), int.from_bytes(data[875:877], byteorder='little')]
-        self.footForceEst = [int.from_bytes(data[877:879], byteorder='little'), int.from_bytes(data[879:881], byteorder='little'), int.from_bytes(data[881:883], byteorder='little'), int.from_bytes(data[883:885], byteorder='little')]
-        self.mode = data[885]
-        self.progress = hex_to_float(data[886:890])
-        self.gaitType = data[890]
-        self.footRaiseHeight = hex_to_float(data[891:895])
-        self.position = [hex_to_float(data[895:899]), hex_to_float(data[899:903]), hex_to_float(data[903:907])]
-        self.bodyHeight = hex_to_float(data[907:911])
-        self.velocity = [hex_to_float(data[911:915]), hex_to_float(data[915:919]), hex_to_float(data[919:923])]
-        self.yawSpeed = hex_to_float(data[923:927])
-        self.rangeObstacle = [hex_to_float(data[927:931]), hex_to_float(data[931:935]), hex_to_float(data[935:939]), hex_to_float(data[939:943])]
-        self.footPosition2Body = []
-        for i in range(4):
-            self.footPosition2Body.append(cartesian(hex_to_float(data[(i*12)+943:(i*12)+947]), hex_to_float(data[(i*12)+947:(i*12)+951]), hex_to_float(data[(i*12)+951:(i*12)+955])))
-        self.footSpeed2Body = []
-        for i in range(4):
-            self.footSpeed2Body.append(cartesian(hex_to_float(data[(i*12)+991:(i*12)+995]), hex_to_float(data[(i*12)+995:(i*12)+999]), hex_to_float(data[(i*12)+999:(i*12)+1003])))
-        self.wirelessRemote = data[1039:1079]
-        self.reserve = data[1079:1083]
-        self.crc = data[1083:1087]
+        self.bms=self.dataToBmsState(data[715:749])
+        self.footForce = [int.from_bytes(data[749:751], byteorder='little'), int.from_bytes(data[751:753], byteorder='little'), int.from_bytes(data[753:755], byteorder='little'), int.from_bytes(data[755:757], byteorder='little')]
+        self.footForceEst = [int.from_bytes(data[757:759], byteorder='little'), int.from_bytes(data[759:761], byteorder='little'), int.from_bytes(data[761:763], byteorder='little'), int.from_bytes(data[763:765], byteorder='little')]
+        self.mode = data[765:769]
+        self.wirelessRemote = data[769:809]
+        self.reserve = data[809:813]
+        self.crc = data[813:817]
+        return True

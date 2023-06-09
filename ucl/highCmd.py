@@ -1,4 +1,4 @@
-from ucl.enums import Mode, GaitType, SpeedLevel
+from ucl.enums import MotorModeHigh, GaitType, SpeedLevel
 from enum import Enum
 from ucl.common import float_to_hex, encryptCrc, genCrc, byte_print
 from ucl.complex import led, bmsCmd
@@ -11,7 +11,7 @@ class highCmd:
         self.SN = bytearray(8)
         self.version = bytearray(8)
         self.bandWidth = bytearray(2)
-        self.mode = Mode.IDLE
+        self.mode = MotorModeHigh.IDLE
         self.gaitType = GaitType.IDLE
         self.speedLevel = SpeedLevel.LOW_SPEED
         self.footRaiseHeight = 0.0
