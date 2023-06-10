@@ -5,7 +5,7 @@ This should be a free version of the robodog go1 sdk. I was upset that the origi
 The intention is to break free of the manufacturers restricitons. This SDK has proven to work on all Models of the Go1 Dog: Air, Pro, Max and Edu
 The manufacturer claims that only the Edu dog can be controlled via the SDK, it was shown before that the Highlevel Commands can be used to control the non-Edu models, but with this SDK you can also use Lowlevel commands.
 
-## Support 
+## Support
 Stop by "TheDogPound - Animal control for stray robot dogs" Slack group, and join #faux-level and #unitree for support assistance.
 https://join.slack.com/t/robotdogs/shared_invite/zt-1fvixx89u-7T79~VxmDYdFSIoTnSagFQ
 
@@ -15,8 +15,17 @@ The SDK is fully useable, however, it does currently not include any Safety feat
 
 ## What do you need?
 
-python3 and some modules, to install them you can use pip from within the project folder
+This repo (ofc), python3 and some modules, to install them you can use pip from within the project folder
+
+First clone the repo
+
 ```
+git clone https://github.com/Bin4ry/free-dog-sdk.git
+```
+then go into the folder and install the requirements
+
+```
+cd free-dog-sdk
 pip install -r requirements.txt
 ```
 

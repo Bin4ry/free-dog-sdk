@@ -2,7 +2,7 @@ from ucl.common import byte_print, decode_version, decode_sn, getVoltage, pretty
 from ucl.lowState import lowState
 from ucl.lowCmd import lowCmd
 from ucl.unitreeConnection import unitreeConnection, LOW_WIFI_DEFAULTS, LOW_WIRED_DEFAULTS
-from ucl.enums import Mode, GaitType, SpeedLevel, MotorModeLow
+from ucl.enums import GaitType, SpeedLevel, MotorModeLow
 from ucl.complex import motorCmd, motorCmdArray
 import time
 import sys
