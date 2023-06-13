@@ -3,7 +3,7 @@ from ucl.highCmd import highCmd
 from ucl.highState import highState
 from ucl.lowCmd import lowCmd
 from ucl.unitreeConnection import unitreeConnection, HIGH_WIFI_DEFAULTS, HIGH_WIRED_DEFAULTS
-from ucl.enums import MotorModeHigh, GaitType, SpeedLevel
+from ucl.enums import MotorModeHigh, GaitType
 from ucl.complex import motorCmd
 import time
 
@@ -112,7 +112,7 @@ while True:
         hcmd.mode = MotorModeHigh.VEL_WALK
         hcmd.gaitType = GaitType.TROT
         hcmd.velocity = [0.4, 0] # -1  ~ +1
-        hcmd.yawSpeed = SpeedLevel.HIGH_SPEED
+        hcmd.yawSpeed = 2.0
         hcmd.footRaiseHeight = 0.1
         # printf("walk\n")
 
