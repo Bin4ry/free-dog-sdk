@@ -106,7 +106,7 @@ while True:
         hcmd.mode = MotorModeHigh.STAND_UP
 
     if(motiontime > 13000 and motiontime < 14000):
-        hcmd.mode = MotorModeHigh.Idle
+        hcmd.mode = MotorModeHigh.IDLE
 
     if(motiontime > 14000 and motiontime < 18000):
         hcmd.mode = MotorModeHigh.VEL_WALK
@@ -117,7 +117,7 @@ while True:
         # printf("walk\n")
 
     if(motiontime > 18000 and motiontime < 20000):
-        hcmd.mode = MotorModeHigh.Idle
+        hcmd.mode = MotorModeHigh.IDLE
         hcmd.velocity = [0, 0]
 
     if(motiontime > 20000 and motiontime < 24000):
