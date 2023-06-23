@@ -31,8 +31,7 @@ class lowState:
         cycle = int.from_bytes(data[8:10], byteorder='little')
         BQ_NTC = [data[10], data[11]]
         MCU_NTC = [data[12], data[13]]
-        cell_vol = [int.from_bytes(data[13:15], byteorder='little'), int.from_bytes(data[15:17], byteorder='little'), int.from_bytes(data[17:19], byteorder='little'), int.from_bytes(data[19:21], byteorder='little'), int.from_bytes(data[21:23], byteorder='little'),
-                    int.from_bytes(data[23:25], byteorder='little'), int.from_bytes(data[25:27], byteorder='little'), int.from_bytes(data[27:29], byteorder='little'), int.from_bytes(data[29:31], byteorder='little'), int.from_bytes(data[31:33], byteorder='little')]
+        cell_vol = [data[14] * 32, data[15] * 32, data[16] * 32, data[17] * 32, data[18] * 32, data[19] * 32, data[20] * 32, data[21] * 32, data[22] * 32, data[23] * 32]
         return bmsState(version_h, version_l, bms_status, SOC, current, cycle, BQ_NTC, MCU_NTC, cell_vol)
 
 
@@ -48,13 +47,13 @@ class lowState:
         mode = data[0]
         q = hex_to_float(data[1:5])
         dq = hex_to_float(data[5:9])
-        ddq = hex_to_float(data[9:13])
-        tauEst = hex_to_tau(data[13:17])
-        q_raw = hex_to_float(data[17:21])
-        dq_raw = hex_to_float(data[21:25])
-        ddq_raw = hex_to_float(data[25:29])
-        temperature = data[29]
-        reserve = [data[30], data[31]]
+        ddq = float(int.from_bytes(data[9:11], byteorder='little', signed=True))
+        tauEst = float(int.from_bytes(data[11:13], byteorder='little', signed=True)) * 0.00390625
+        q_raw = hex_to_float(data[13:17])
+        dq_raw = hex_to_float(data[17:21])
+        ddq_raw = float(int.from_bytes(data[21:23], byteorder='little', signed=True))
+        temperature = data[24]
+        reserve = [int.from_bytes(data[24:28], byteorder='little'), int.from_bytes(data[28:32], byteorder='little')]
         return motorState(mode, q, dq, ddq, tauEst, q_raw, dq_raw, ddq_raw, temperature, reserve)
 
     def parseData(self, data):
@@ -68,11 +67,11 @@ class lowState:
         self.motorstate=[]
         for i in range(20):
             self.motorstate.append(self.dataToMotorState(data[(i*32)+75:(i*32)+32+75]))
-        self.bms=self.dataToBmsState(data[715:749])
-        self.footForce = [int.from_bytes(data[749:751], byteorder='little'), int.from_bytes(data[751:753], byteorder='little'), int.from_bytes(data[753:755], byteorder='little'), int.from_bytes(data[755:757], byteorder='little')]
-        self.footForceEst = [int.from_bytes(data[757:759], byteorder='little'), int.from_bytes(data[759:761], byteorder='little'), int.from_bytes(data[761:763], byteorder='little'), int.from_bytes(data[763:765], byteorder='little')]
-        self.mode = data[765:769]
-        self.wirelessRemote = data[769:809]
-        self.reserve = data[809:813]
-        self.crc = data[813:817]
+        self.bms=self.dataToBmsState(data[715:739])
+        self.footForce = [int.from_bytes(data[739:741], byteorder='little'), int.from_bytes(data[751:753], byteorder='little'), int.from_bytes(data[753:755], byteorder='little'), int.from_bytes(data[755:757], byteorder='little')]
+        self.footForceEst = [int.from_bytes(data[747:749], byteorder='little'), int.from_bytes(data[759:761], byteorder='little'), int.from_bytes(data[761:763], byteorder='little'), int.from_bytes(data[763:765], byteorder='little')]
+        self.mode = data[755:759]
+        self.wirelessRemote = data[759:799]
+        self.reserve = data[799:803]
+        self.crc = data[803:807]
         return True
