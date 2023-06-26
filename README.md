@@ -1,28 +1,34 @@
-# free dog sdk
+# Unitree Go1 Free-Dog SDK
 
-This should be a free version of the robodog go1 sdk. I was upset that the original sdk only comes in precompiled libs, so i started to write this. It is far from finished but it can be used to send highLevelCmds and lowLevelCmds to the Unitre** Go1 dogs (maybe other dogs too...).
+[Who let the 'robot dogs' out!?](https://www.youtube.com/watch?v=Qkuu0Lwb5EM)
 
-The intention is to break free of the manufacturers restricitons. This SDK has proven to work on all Models of the Go1 Dog: Air, Pro, Max and Edu
-The manufacturer claims that only the Edu dog can be controlled via the SDK, it was shown before that the Highlevel Commands can be used to control the non-Edu models, but with this SDK you can also use Lowlevel commands.
+![Who Let The Dogs Out?](https://github.com/Bin4ry/free-dog-sdk/raw/main/WhoLetDogsOut.gif)
+![Who Let The Dogs Out?](https://github.com/Bin4ry/free-dog-sdk/raw/main/DogsGettingOut.gif)
+
+This repo consists of a free, non paywalled, pay-for-play version of the [Unitree Legged SDK](https://github.com/unitreerobotics/unitree_legged_sdk). Former "DJI Slack OG" [bin4ry](https://twitter.com/bin4rydigit) was not only upset that the original Unitree SDK only came with precompiled and poorly documented libraries, but also sick of hearing [@d0tslash](https://twitter.com/d0tslash) complain about it on "TheDogPound - Animal control for stray robot dogs" Slack group. 
+
+Through months of dedication the Unitree libraries were reverse engineered, and this git repository was created with a "free" / liberated version of the Unitree library. This work is far from finished, but in current form it can be used to send ```highLevelCmds``` and ```lowLevelCmds``` to the 宇树科技 Yushu Technology (Unitree) Go1 series dogs. Specifically this SDK enables EDU functions on Air, Pro, and MAX dogs. This code should also be cross functional with A1, AlienGo, B1, and others, but will require some work to support their hard coded values. PR's are [welcome](https://github.com/Bin4ry/free-dog-sdk/compare). 
+
+The intention of this repo is to break free of the manufacturers restricitons on which dog's can utilize the full SDK functionality. The Free-Dog SDK has proven to work on all Models of the 宇树科技 Yushu Technology (Unitree) Go1 series including Air, Pro, Max and EDU models. Unitree sales staff, and distributors repeatedly make claims, and assert that only the EDU dog can be controlled via the SDK, as such you must purchase the more expensive dog if you seek to be a developer. The end user population is discuraged from buying the Air, and told it is simply a "toy", that handles like a "remote control" car *only*. The Unitree community however was quick to discover that in fact ```highLevelCmds``` can in fact be used to control non-Edu models. We further built on the community dicovery to prove that in fact you can also use ```lowLevelCmds``` with inexpensive dogs.
 
 ## Support
-Stop by "TheDogPound - Animal control for stray robot dogs" Slack group, and join #faux-level and #unitree for support assistance.
+Stop by "TheDogPound - Animal control for stray robot dogs" Slack group, and join #faux-level and #unitree for support assistance. This is a new project, and a fresh group, be patient with your support requests, and needs.
 https://join.slack.com/t/robotdogs/shared_invite/zt-1fvixx89u-7T79~VxmDYdFSIoTnSagFQ
 
 ## Current State
 
-The SDK is fully useable, however, it does currently not include any Safety features of the original SDK. Please feel free to contribute the Safety restrictions to the project! Also it might still include small bugs, if you see one, please fix it and do a PR ;)
+The SDK is fully useable, however, it does currently not include any Safety features of the original SDK. Please feel free to contribute the Safety restrictions to the project, we do have a base git issue explaining the needed logic if you are interested in contributing! [Detail on replicating Safety functions](https://github.com/Bin4ry/free-dog-sdk/issues/7). As expected this software might still include small bugs, or errata, if you see one, or find some please let us know via git [issue](https://github.com/Bin4ry/free-dog-sdk/issues), or attempt to fix it and submit a [PR](https://github.com/Bin4ry/free-dog-sdk/pulls).
 
 ## What do you need?
 
-This repo (ofc), python3 and some modules, to install them you can use pip from within the project folder
+This repo, python3 and a few prerequisite modules. 
 
 First clone the repo
 
 ```
 git clone https://github.com/Bin4ry/free-dog-sdk.git
 ```
-then go into the folder and install the requirements
+then go into the folder and install the requirements (prerequisite modules) 
 
 ```
 cd free-dog-sdk
@@ -30,10 +36,13 @@ pip install -r requirements.txt
 ```
 
 ## Configuration of the dog and the SDK
-There are several configurations you can run. You can either run the script from any component inside the dog, or on an connected PC. It doesn't matter really, but you need to make sure to configure you dog accordingly and use the correct connection settings inside the SDK.
-In our example we will connect the PC via WiFi to the Dogs Hotspot. Startup the dog and connect to the WiFi, the default Wifi password is of the Hotspot is 00000000
+There are several configurations you can run. You can either run the script from any component inside the dog, either the Jetsons or RasPi. Alternately you can run it from a PC connected to the Dog's network. The location in which the code runs doesn't particiularly matter, but you will need to make sure to configure your dogs network accordingly, and subsequently use the correct connection settings inside the Free-Dog SDK. For our examples we connected a PC to the WiFi using the dogs Hotspot. 
 
-Now your PC should have the IP 192.168.12.14 and you should be able to reach the Dog via ping on 192.168.12.1. To run the Highlevel examples that is all what you need.
+Start the dog up, and connect to the WiFi. The default Wifi password is of the Hotspot is 00000000. Please see Unitree documentation for more detail.
+
+In this case the DHCP service gave us the address IP 192.168.12.14 and we were able to reach the dog which was verified via a ```ping 192.168.12.1``` test. 
+
+This simple connectivity is all that is needed to run the Highlevel examples.
 
 #### Configure the connection
 Lets first take a look into the examples, they usually start with the imports and then they build an connection object like this:
@@ -144,7 +153,12 @@ https://www.buymeacoffee.com/bin4ry
 
 
 ## Warnings
-This is an Opensource project, we are not responsible for any damage done to your dog. Be aware that the project might be incomplete and may allow you to break the dog.
+This is an Opensource project, we are not responsible for any damage done to your dog. Be aware that the project might be incomplete and may allow you to break the dog. If you are not familiar with Unitree Low level commands, it is highly recommended you first read up on them. Low level commands are not for the light hearted, and as stated multiple times, CAN damage your dog. 
+
+At least one user on our Slack Group blew his MOSFETs with the normal Unitree SDK, expect ours to have the same ability to allow you to create your own failure conditions. 
 
 ## LICENSE
 MIT see LICENSE file
+
+![Who Let The Dogs Out?](https://github.com/Bin4ry/free-dog-sdk/raw/main/WhoWhoWhoWho.gif)
+![Who Let The Dogs Out?](https://github.com/Bin4ry/free-dog-sdk/raw/main/DogsFleeing.gif)
