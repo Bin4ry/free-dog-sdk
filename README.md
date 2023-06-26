@@ -167,7 +167,7 @@ MIT see LICENSE file
 Looking for Quadruped friends? Join "The Dog Pound animal control for Stray robot dogs" slack group: <br>
 https://join.slack.com/t/robotdogs/shared_invite/zt-1fvixx89u-7T79~VxmDYdFSIoTnSagFQ<br>
 
-Looking for a Unitree Go1 Air, Pro, or MAX bible full of the current community info? Look no further than the [宇树科技 Yushu Technology Unitree go1 development notes repo](
+Looking for a Unitree Go1 Air, Pro, or MAX bible full of the current community info? Look no further than the [宇树科技 Yushu Technology Unitree go1 development notes repo](https://github.com/MAVProxyUser/YushuTechUnitreeGo1/tree/main)
 
 
 If you like this repo, fork it... [Click to Fork https://github.com/Bin4ry/free-dog-sdk](https://github.com/Bin4ry/free-dog-sdk/fork)! Make sure you keep your forked copy up to date, lots of changes happen over time. You won't want a stale copy. 
