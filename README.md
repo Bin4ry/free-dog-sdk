@@ -5,7 +5,7 @@
 ![Who Let The Dogs Out?](https://github.com/Bin4ry/free-dog-sdk/raw/main/WhoLetDogsOut.gif)
 ![Who Let The Dogs Out?](https://github.com/Bin4ry/free-dog-sdk/raw/main/DogsGettingOut.gif)
 
-This repo consists of a free, non paywalled, pay-for-play version of the [Unitree Legged SDK](https://github.com/unitreerobotics/unitree_legged_sdk). Former "DJI Slack OG" [bin4ry](https://twitter.com/bin4rydigit) was not only upset that the original Unitree SDK only came with precompiled and poorly documented libraries, but also sick of hearing [@d0tslash](https://twitter.com/d0tslash) complain about it on "TheDogPound - Animal control for stray robot dogs" Slack group. 
+This repo consists of a free, non paywalled, non pay-for-play version of the [Unitree Legged SDK](https://github.com/unitreerobotics/unitree_legged_sdk). Former "DJI Slack OG" [bin4ry](https://twitter.com/bin4rydigit) was not only upset that the original Unitree SDK only came with precompiled and poorly documented libraries, but also sick of hearing [@d0tslash](https://twitter.com/d0tslash) complain about it on "TheDogPound - Animal control for stray robot dogs" Slack group. 
 
 Through months of dedication the Unitree libraries were reverse engineered, and this git repository was created with a "free" / liberated version of the Unitree library. This work is far from finished, but in current form it can be used to send ```highLevelCmds``` and ```lowLevelCmds``` to the 宇树科技 Yushu Technology (Unitree) Go1 series dogs. Specifically this SDK enables EDU functions on Air, Pro, and MAX dogs. This code should also be cross functional with A1, AlienGo, B1, and others, but will require some work to support their hard coded values. PR's are [welcome](https://github.com/Bin4ry/free-dog-sdk/compare). 
 
