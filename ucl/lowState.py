@@ -64,9 +64,9 @@ class lowState:
         self.version = data[12:20]
         self.bandWidth = int.from_bytes(data[20:22], byteorder='little')
         self.imu = self.dataToImu(data[22:75])
-        self.motorstate=[]
+        self.motorState=[]
         for i in range(20):
-            self.motorstate.append(self.dataToMotorState(data[(i*32)+75:(i*32)+32+75]))
+            self.motorState.append(self.dataToMotorState(data[(i*32)+75:(i*32)+32+75]))
         self.bms=self.dataToBmsState(data[715:739])
         self.footForce = [int.from_bytes(data[739:741], byteorder='little'), int.from_bytes(data[751:753], byteorder='little'), int.from_bytes(data[753:755], byteorder='little'), int.from_bytes(data[755:757], byteorder='little')]
         self.footForceEst = [int.from_bytes(data[747:749], byteorder='little'), int.from_bytes(data[759:761], byteorder='little'), int.from_bytes(data[761:763], byteorder='little'), int.from_bytes(data[763:765], byteorder='little')]
