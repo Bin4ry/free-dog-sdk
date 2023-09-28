@@ -13,7 +13,7 @@ The intention of this repo is to break free of the manufacturers restricitons on
 
 ## Support
 Stop by "TheDogPound - Animal control for stray robot dogs" Slack group, and join #faux-level and #unitree for support assistance. This is a new project, and a fresh group, be patient with your support requests, and needs.
-https://join.slack.com/t/robotdogs/shared_invite/zt-1fvixx89u-7T79~VxmDYdFSIoTnSagFQ
+https://join.slack.com/t/robotdogs/shared_invite/zt-24ep8mqn4-1p42Aq7owRv9klLI~3C5Pw
 
 ## Current State
 
