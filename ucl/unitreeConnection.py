@@ -9,7 +9,7 @@ sendPort_low = 8007
 sendPort_high = 8082
 
 local_ip_wifi = '192.168.12.14'
-local_ip_eth = '192.168.123.14'
+local_ip_eth = '192.168.123.16'
 addr_wifi = '192.168.12.1'
 addr_low = '192.168.123.10'
 addr_high = '192.168.123.161'
